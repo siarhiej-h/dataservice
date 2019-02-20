@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Common.Logging;
 using Common.Logging.Configuration;
 using Microsoft.AspNetCore.Hosting;
@@ -21,6 +22,11 @@ namespace DataService.HostConfiguration
             Configuration.GetSection("LogConfiguration").Bind(logConfiguration);
             LogManager.Configure(logConfiguration);
 
+            AppDomain.CurrentDomain.UnhandledException += (sender, args) =>
+            {
+                LogManager.GetLogger(sender.GetType()).Fatal(args.ExceptionObject);
+            };
+                
             return builder;
         }
 
