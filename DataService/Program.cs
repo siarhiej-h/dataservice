@@ -1,17 +1,17 @@
-﻿using System.IO;
+﻿using DataService.HostConfiguration;
 using Microsoft.AspNetCore.Hosting;
 
 namespace DataService
 {
-    class Program
+    public class Program
     {
         static void Main(string[] args)
         {
             var host = new WebHostBuilder()
-                .UseContentRoot(Directory.GetCurrentDirectory())
-                .UseKestrel()
-                .UseUrls("http://localhost:4242")
+                .UseCommonLogging()
+                .UseUrls()
                 .UseStartup<Startup>()
+                .UseKestrel()
                 .Build();
 
             host.Run();
