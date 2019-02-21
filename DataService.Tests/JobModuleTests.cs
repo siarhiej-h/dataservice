@@ -1,6 +1,6 @@
-﻿using DataService.Core;
-using DataService.Entities;
-using DataService.Modules;
+﻿using DataService.Api.Modules;
+using DataService.Core;
+using DataService.Core.Entities;
 using Nancy;
 using Nancy.Testing;
 using NSubstitute;

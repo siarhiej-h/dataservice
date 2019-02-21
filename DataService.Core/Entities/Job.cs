@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataService.Entities
+﻿namespace DataService.Core.Entities
 {
     public class Job
     {

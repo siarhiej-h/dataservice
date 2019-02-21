@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DataService.Api\DataService.Api.csproj" />
     <ProjectReference Include="..\DataService.Core\DataService.Core.csproj" />
   </ItemGroup>
 

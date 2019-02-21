@@ -1,9 +1,10 @@
-﻿using DataService.Core;
-using DataService.Entities;
+﻿using System;
+using DataService.Core;
+using DataService.Core.Entities;
 using Nancy;
 using Nancy.ModelBinding;
 
-namespace DataService.Modules
+namespace DataService.Api.Modules
 {
     public sealed class JobsModule : NancyModule
     {
