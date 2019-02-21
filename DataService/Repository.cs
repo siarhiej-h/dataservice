@@ -33,7 +33,12 @@ namespace DataService
         public void Update(TIdentity id, TEntity entity)
         {
             Log.DebugFormat("Updating instance with id '{0}'.", id);
-            internalDict_.TryUpdate(id, entity, entity);
+
+            TEntity oldValue;
+            if (internalDict_.TryGetValue(id, out oldValue))
+            {
+                internalDict_.TryUpdate(id, entity, oldValue);
+            }
         }
 
         public void Delete(TIdentity id)
