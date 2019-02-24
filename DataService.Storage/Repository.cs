@@ -2,7 +2,7 @@
 using Common.Logging;
 using DataService.Core;
 
-namespace DataService
+namespace DataService.Storage
 {
     public class Repository<TIdentity, TEntity> : IRepository<TIdentity, TEntity>
         where TIdentity : class

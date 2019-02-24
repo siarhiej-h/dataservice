@@ -2,6 +2,7 @@
 using Common.Logging;
 using DataService.Core;
 using DataService.Core.Entities;
+using DataService.Storage;
 using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Owin;

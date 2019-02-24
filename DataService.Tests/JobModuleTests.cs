@@ -6,7 +6,7 @@ using Nancy.Testing;
 using NSubstitute;
 using Xunit;
 
-namespace DataService.Tests
+namespace DataService.ModulesTests
 {
     public class JobModuleTests
     {

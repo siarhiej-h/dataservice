@@ -1,7 +1,7 @@
-using System;
+using DataService.Storage;
 using Xunit;
 
-namespace DataService.Tests
+namespace DataService.RepositoryTests
 {
     public class RepositoryTests
     {
