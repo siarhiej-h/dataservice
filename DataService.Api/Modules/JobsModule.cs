@@ -11,10 +11,16 @@ namespace DataService.Api.Modules
         public JobsModule(IRepository<string, Job> repository)
             : base("api/jobs")
         {
+            Get("/", o =>
+            {
+                var jobs = repository.ListAll();
+                return Response.AsJson((object)jobs);
+            });
+
             Post("/{id}", o =>
             {
                 var job = this.Bind<Job>();
-                repository.Create(o.id, job);
+                repository.Create(job);
                 return HttpStatusCode.OK;
             });
 
@@ -27,7 +33,7 @@ namespace DataService.Api.Modules
             Put("/{id}", o =>
             {
                 var job = this.Bind<Job>();
-                repository.Update(o.id, job);
+                repository.Update(job);
                 return HttpStatusCode.OK;
             });
 

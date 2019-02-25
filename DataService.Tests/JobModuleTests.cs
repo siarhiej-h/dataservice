@@ -1,4 +1,6 @@
-﻿using DataService.Api.Modules;
+﻿using System.Collections.Generic;
+using System.Linq;
+using DataService.Api.Modules;
 using DataService.Core;
 using DataService.Core.Entities;
 using Nancy;
@@ -10,6 +12,33 @@ namespace DataService.ModulesTests
 {
     public class JobModuleTests
     {
+        [Fact]
+        public void GetAllShouldReturnStatusOk()
+        {
+            // Given
+            var repo = Substitute.For<IRepository<string, Job>>();
+            repo.ListAll().Returns(ci => new [] { new Job("id", Job.JobClass.Awesome) });
+
+            var browser = new Browser(configurator =>
+            {
+                configurator.Module<JobsModule>();
+                configurator.Dependency(repo);
+            });
+
+            // When
+            var result = browser.Get("/api/jobs/", with => {
+                with.HttpRequest();
+            });
+
+            // Then
+            Assert.Equal(HttpStatusCode.OK, result.Result.StatusCode);
+
+            var jobs = result.Result.Body.DeserializeJson<IList<Job>>();
+            var job = jobs.Single();
+            Assert.Equal("id", job.JobName);
+            Assert.Equal(Job.JobClass.Awesome, job.Class);
+        }
+
         [Fact]
         public void GetShouldReturnStatusOk()
         {
@@ -58,7 +87,7 @@ namespace DataService.ModulesTests
             // Then
             Assert.Equal(HttpStatusCode.OK, result.Result.StatusCode);
             repo.Received()
-                .Create(job.JobName, Arg.Is<Job>(j => j.JobName == job.JobName && j.Class == job.Class));
+                .Create(Arg.Is<Job>(j => j.JobName == job.JobName && j.Class == job.Class));
         }
 
         [Fact]
@@ -84,7 +113,7 @@ namespace DataService.ModulesTests
             Assert.Equal(HttpStatusCode.OK, result.Result.StatusCode);
 
             repo.Received()
-                .Update(job.JobName, Arg.Is<Job>(j => j.JobName == job.JobName && j.Class == job.Class));
+                .Update(Arg.Is<Job>(j => j.JobName == job.JobName && j.Class == job.Class));
         }
 
         [Fact]
