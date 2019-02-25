@@ -1,5 +1,5 @@
 using System;
-using System.Runtime.CompilerServices;
+using System.Linq;
 using DataService.Core.Entities;
 using DataService.Storage;
 using Xunit;
@@ -40,6 +40,16 @@ namespace DataService.RepositoryTests
 
             repo.Delete(key);
             Assert.Null(repo.Read(key));
+        }
+
+        [Theory]
+        [InlineData("key", "value")]
+        public void RepositoryReadAllTest(string key, string value)
+        {
+            var repo = new Repository<string, TestEntity>();
+            var entity = new TestEntity(key, value);
+            repo.Create(entity);
+            Assert.Equal(entity, repo.ListAll().Single());
         }
 
         private class TestEntity : Tuple<string, string>, IEntity<string>
