@@ -23,7 +23,17 @@ namespace DataService
 
             protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
             {
-                container.Register<IRepository<string, Job>, Repository<string, Job>>().AsSingleton();
+                container.Register<IRepository<string, Item>, Repository<string, Item>>().AsSingleton();
+
+                //CORS Enable
+                pipelines.AfterRequest.AddItemToEndOfPipeline((ctx) =>
+                {
+                    ctx.Response.WithHeader("Access-Control-Allow-Origin", "*")
+                                    .WithHeader("Access-Control-Allow-Methods", "POST,GET,PUT,DELETE")
+                                    .WithHeader("Access-Control-Allow-Headers", "Accept, Origin, Content-type")
+                                    .WithHeader("Vary", "Origin");
+
+                });
 
                 pipelines.OnError.AddItemToEndOfPipeline(((context, exception) =>
                 {
