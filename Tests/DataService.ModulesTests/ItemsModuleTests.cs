@@ -89,7 +89,7 @@ namespace DataService.ModulesTests
             // Then
             Assert.Equal(HttpStatusCode.OK, result.Result.StatusCode);
             repo.Received()
-                .Create(Arg.Is<Item>(j => j.Name == item.Name && j.Price == item.Price));
+                .Create(item.Name, Arg.Is<Item>(j => j.Name == item.Name && j.Price == item.Price));
         }
 
         [Fact]
@@ -115,7 +115,7 @@ namespace DataService.ModulesTests
             Assert.Equal(HttpStatusCode.OK, result.Result.StatusCode);
 
             repo.Received()
-                .Update(Arg.Is<Item>(j => j.Name == item.Name && j.Price == item.Price));
+                .Update(item.Name, Arg.Is<Item>(j => j.Name == item.Name && j.Price == item.Price));
         }
 
         [Fact]

@@ -19,7 +19,7 @@ namespace DataService.Api.Modules
             Post("/", o =>
             {
                 var item = this.Bind<Item>();
-                repository.Create(item);
+                repository.Create(item.Name, item);
                 return HttpStatusCode.OK;
             });
 
@@ -32,7 +32,7 @@ namespace DataService.Api.Modules
             Put("/", o =>
             {
                 var item = this.Bind<Item>();
-                repository.Update(item);
+                repository.Update(item.Name, item);
                 return HttpStatusCode.OK;
             });
 

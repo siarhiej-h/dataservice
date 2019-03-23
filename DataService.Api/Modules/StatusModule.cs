@@ -1,7 +1,4 @@
-﻿using DataService.Core;
-using DataService.Core.Entities;
-using Nancy;
-using Nancy.ModelBinding;
+﻿using Nancy;
 
 namespace DataService.Api.Modules
 {
@@ -10,11 +7,9 @@ namespace DataService.Api.Modules
         public StatusModule()
             : base("api/status")
         {
-            Post("/", o =>
+            Get("/", o =>
             {
-                var item = this.Bind<Item>();
-                System.Console.WriteLine($"{item.Name} : {item.Price}");
-                return HttpStatusCode.OK;
+                return Response.AsJson("I am alive");
             });
         }
     }

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DataService.Core.Entities
+﻿namespace DataService.Core.Entities
 {
-    public class Item : IEntity<string>
+    public class Item
     {
         public Item()
         {
@@ -19,7 +15,5 @@ namespace DataService.Core.Entities
         public string Name { get; set; }
 
         public decimal Price { get; set; }
-
-        public string GetKey() => Name;
     }
 }
