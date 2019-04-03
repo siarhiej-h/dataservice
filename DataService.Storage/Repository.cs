@@ -1,14 +1,14 @@
-﻿using System.Collections.Concurrent;
+﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using Common.Logging;
 using DataService.Core;
-using DataService.Core.Entities;
 
 namespace DataService.Storage
 {
     public class Repository<TIdentity, TEntity> : IRepository<TIdentity, TEntity>
-        where TIdentity : class
-        where TEntity : class, IEntity<TIdentity>
+        where TIdentity : class, IEquatable<TIdentity>
+        where TEntity : class
     {
         private static readonly ILog Log = LogManager.GetLogger<Repository<TIdentity, TEntity>>();
 
@@ -20,10 +20,10 @@ namespace DataService.Storage
             Log.Debug("Repository instance created.");
         }
 
-        public void Create(TEntity instance)
+        public void Create(TIdentity id, TEntity instance)
         {
-            Log.DebugFormat("Adding instance with id '{0}'.", instance.GetKey());
-            internalDict_.TryAdd(instance.GetKey(), instance);
+            Log.DebugFormat("Adding instance with id '{0}'.", id);
+            internalDict_.TryAdd(id, instance);
         }
 
         public TEntity Read(TIdentity id)
@@ -32,14 +32,14 @@ namespace DataService.Storage
             return internalDict_.TryGetValue(id, out var entity) ? entity : null;
         }
 
-        public void Update(TEntity entity)
+        public void Update(TIdentity id, TEntity entity)
         {
-            Log.DebugFormat("Updating instance with id '{0}'.", entity.GetKey());
+            Log.DebugFormat("Updating instance with id '{0}'.", id);
 
             TEntity oldValue;
-            if (internalDict_.TryGetValue(entity.GetKey(), out oldValue))
+            if (internalDict_.TryGetValue(id, out oldValue))
             {
-                internalDict_.TryUpdate(entity.GetKey(), entity, oldValue);
+                internalDict_.TryUpdate(id, entity, oldValue);
             }
         }
 
